@@ -33,7 +33,7 @@ final products = [
   },
 ];
 
-final cart = [
+/* final cart = [
   {
     'id': '3',
     'title': 'Jordan Shoes',
@@ -43,3 +43,4 @@ final cart = [
     'size': 8,
   }
 ];
+ */

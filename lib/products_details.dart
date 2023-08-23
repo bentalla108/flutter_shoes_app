@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/cart_provider.dart';
+import 'package:shop_app/global_variables.dart';
 
 class ProductDetail extends StatefulWidget {
   final Map<String, Object> product;
@@ -58,7 +61,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     itemCount: (widget.product['sizes'] as List<int>).length,
                     itemBuilder: (context, index) {
                       final size =
-                          (widget.product['sizes'] as List<int>)[index] as int;
+                          (widget.product['sizes'] as List<int>)[index];
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -84,7 +87,30 @@ class _ProductDetailState extends State<ProductDetail> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (selectedSize != 0) {
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addProduct(
+                          {
+                            'id': widget.product['id'],
+                            'title': widget.product['title'],
+                            'price': widget.product['price'],
+                            'imageUrl': widget.product['imageUrl'],
+                            'company': widget.product['company'],
+                            'size': selectedSize,
+                          },
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text('Product added successfuly..')));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text('Please Select a size ..')));
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       minimumSize: const Size(
