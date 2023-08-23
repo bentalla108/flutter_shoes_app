@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<String> filters = const ['All', 'adidas', 'Nike', 'Pumas'];
   late String selectedFilter;
+  int currentPage = 0;
 
   @override
   void initState() {
@@ -131,7 +132,19 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-            )
+            ),
+            BottomNavigationBar(
+                currentIndex: currentPage,
+                onTap: (value) {
+                  setState(() {
+                    currentPage = value;
+                  });
+                },
+                items: const [
+                  BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.shopping_cart), label: ''),
+                ])
           ],
         ),
       ),
